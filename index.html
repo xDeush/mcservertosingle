@@ -647,6 +647,13 @@
   const DOWNLOAD_ICON_SVG = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v8m0 0L5 7m3 3l3-3M2.5 12.5v1a1 1 0 001 1h9a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const FALLBACK_AVATAR_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" fill="#171b23"/><rect x="4" y="3" width="8" height="7" fill="#3a4150"/><rect x="5" y="11" width="6" height="3" fill="#3a4150"/></svg>';
 
+  // World/player data (filenames, folder paths, NBT string tags like Dimension)
+  // is attacker-controlled if the world came from someone else. Never let it
+  // reach innerHTML unescaped.
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
   ['dragover','dragenter'].forEach(evt=>{
     dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.classList.add('drag'); });
   });
@@ -757,7 +764,7 @@
         btn.className = 'world-picker-btn';
         btn.type = 'button';
         const label = c.root || '(root)';
-        btn.innerHTML = `<span class="path">${label}</span><span class="count">${c.playerFiles.length} player${c.playerFiles.length===1?'':'s'}</span>`;
+        btn.innerHTML = `<span class="path">${esc(label)}</span><span class="count">${c.playerFiles.length} player${c.playerFiles.length===1?'':'s'}</span>`;
         btn.addEventListener('click', ()=>{
           worldPicker.style.display = 'none';
           worldPicker.innerHTML = '';
@@ -796,18 +803,18 @@
       card.dataset.uuid = uuidH.toLowerCase();
       card.innerHTML = `
         <div class="card-top">
-          <img class="avatar" src="https://render.crafty.gg/2d/head/${uuidH}?size=80" alt=""
+          <img class="avatar" src="https://render.crafty.gg/2d/head/${encodeURIComponent(uuidH)}?size=80" alt=""
                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,${encodeURIComponent(FALLBACK_AVATAR_SVG)}';">
           <div class="card-id">
-            <div class="nickname" data-nick-for="${p.uuid}">Player…</div>
-            <div class="uuid-small">${uuidH}</div>
+            <div class="nickname" data-nick-for="${esc(p.uuid)}">Player…</div>
+            <div class="uuid-small">${esc(uuidH)}</div>
           </div>
         </div>
         <div class="stats">processing…</div>
       `;
       playersGrid.appendChild(card);
 
-      fetch(`https://playerdb.co/api/player/minecraft/${uuidH}`)
+      fetch(`https://playerdb.co/api/player/minecraft/${encodeURIComponent(uuidH)}`)
         .then(r=> r.ok ? r.json() : null)
         .then(data=>{
           const name = data && data.data && data.data.player && data.data.player.username;
@@ -848,10 +855,10 @@
         card.classList.remove('pending');
         const statsEl = card.querySelector('.stats');
         statsEl.innerHTML = `
-          <div class="row"><span>Position</span><span>${stats.pos}</span></div>
-          <div class="row"><span>Dimension</span><span title="${stats.dim}">${stats.dim}</span></div>
-          <div class="row"><span>Items</span><span>${stats.inv}</span></div>
-          <div class="row"><span>XP</span><span>${stats.xp}</span></div>
+          <div class="row"><span>Position</span><span>${esc(stats.pos)}</span></div>
+          <div class="row"><span>Dimension</span><span title="${esc(stats.dim)}">${esc(stats.dim)}</span></div>
+          <div class="row"><span>Items</span><span>${esc(stats.inv)}</span></div>
+          <div class="row"><span>XP</span><span>${esc(stats.xp)}</span></div>
         `;
         const dlBtn = document.createElement('button');
         dlBtn.className = 'card-dl';
@@ -863,7 +870,7 @@
         ok++;
       }catch(err){
         card.classList.remove('pending');
-        card.querySelector('.stats').innerHTML = `<span class="error-txt">Failed to process: ${err.message}</span>`;
+        card.querySelector('.stats').innerHTML = `<span class="error-txt">Failed to process: ${esc(err.message)}</span>`;
         failed++;
       }
     }
