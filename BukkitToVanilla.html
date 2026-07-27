@@ -500,6 +500,13 @@
 
   const DOWNLOAD_ICON_SVG = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v8m0 0L5 7m3 3l3-3M2.5 12.5v1a1 1 0 001 1h9a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+  // baseName / parentPath come from folder names the user selected — if this
+  // world was shared by someone else, those names are attacker-controlled.
+  // Never let them reach innerHTML unescaped.
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
   const scanStatus = document.getElementById('scanStatus');
   const panel2 = document.getElementById('panel2');
   const worldsGrid = document.getElementById('worldsGrid');
@@ -649,8 +656,8 @@
       const netherOk = !!c.netherPath, endOk = !!c.endPath;
       card.innerHTML = `
         <div class="world-card-head">
-          <div class="world-name">${c.baseName}</div>
-          <div class="world-path">${c.parentPath || '(root)'}</div>
+          <div class="world-name">${esc(c.baseName)}</div>
+          <div class="world-path">${esc(c.parentPath || '(root)')}</div>
         </div>
         <div class="world-stats-row">
           <div class="stat"><span class="stat-label">Nether</span><span class="stat-value ${netherOk?'':'error-txt'}">${netherOk?'included':'missing'}</span></div>
