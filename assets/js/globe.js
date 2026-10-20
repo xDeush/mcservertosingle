@@ -8,7 +8,7 @@
   const ctx = canvas.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const CYAN = '34,211,238';
+  const CYAN = '108,195,207';
   const TILT = -0.38;
   let W, H, R, cx, cy, dpr;
 
@@ -70,7 +70,17 @@
     }
   }
 
-  const STEPS = 72;
+  // Grid drawn as square dots snapped to a 3px grid: a quiet nod to blocks.
+  function dots(points, rot, aFront, aBack){
+    for(const p of points){
+      const q = project(p, rot);
+      const x = Math.round(q.x / 3) * 3, y = Math.round(q.y / 3) * 3;
+      ctx.fillStyle = `rgba(${CYAN},${q.z < 0 ? aFront : aBack})`;
+      ctx.fillRect(x - 1, y - 1, 2, 2);
+    }
+  }
+
+  const STEPS = 160;
   const meridians = [], parallels = [];
   for(let m = 0; m < 18; m++){
     const lon = m / 18 * Math.PI * 2, pts = [];
@@ -97,8 +107,8 @@
     ctx.lineWidth = 1;
     ctx.strokeStyle = `rgba(${CYAN},0.25)`;
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
-    for(const m of meridians) line(m, rot, 0.14, 0.035);
-    for(const p of parallels) line(p, rot, 0.14, 0.035);
+    for(const m of meridians) dots(m, rot, 0.32, 0.07);
+    for(const p of parallels) dots(p, rot, 0.32, 0.07);
 
     for(const arc of arcs){
       const pts = [];

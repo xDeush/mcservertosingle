@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="assets/img/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
 <script type="application/ld+json">
 {
@@ -37,6 +37,7 @@
 </script>
 </head>
 <body data-page="hub">
+<a class="skip" href="#main">Skip to content</a>
 <header class="topbar">
   <a class="brand" href="./"><img src="assets/img/favicon-32.png" alt="" width="22" height="22">mcservertosingle<span>.online</span></a>
   <nav class="nav">
@@ -46,13 +47,13 @@
   </nav>
 </header>
 
-<main class="wrap">
-  <div class="kicker reveal"><span data-i18n="hub.kicker">mcservertosingle · world fixer</span><span class="tag" data-i18n="hub.tag">runs 100% in your browser</span></div>
+<main class="wrap" id="main">
+  <div class="kicker reveal" data-i18n="hub.kicker">mcservertosingle · world fixer</div>
   <h1 class="reveal reveal-2" data-i18n-html="hub.h1">You got your world back,<br>but not <span class="accent">your playerdata.</span></h1>
   <p class="lede reveal reveal-3" data-i18n-html="hub.lede"></p>
 
   <section class="panel reveal reveal-3" id="panel1">
-    <div class="panel-head"><div class="title"><span class="num">1</span><h2 data-i18n="hub.p1">Server or world folder</h2></div></div>
+    <div class="panel-head"><div class="title"><span class="num">01</span><h2 data-i18n="hub.p1">Server or world folder</h2></div></div>
     <p class="hint" data-i18n-html="hub.p1.hint"></p>
     <label class="dropzone" id="dropzone">
       <svg class="icon" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M4 10a2 2 0 012-2h8l3 3h13a2 2 0 012 2v15a2 2 0 01-2 2H6a2 2 0 01-2-2V10z" stroke="currentColor" stroke-width="1.6"/><path d="M18 15v8m0-8l-3 3m3-3l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -67,7 +68,7 @@
 
   <section class="panel disabled" id="panel2">
     <div class="panel-head">
-      <div class="title"><span class="num">2</span><h2 data-i18n="hub.p2">Who's playing?</h2></div>
+      <div class="title"><span class="num">02</span><h2 data-i18n="hub.p2">Who's playing?</h2></div>
       <label class="search-box"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M14 14l-3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><input type="text" id="search" data-i18n-attr="placeholder:search;aria-label:search"></label>
     </div>
     <p class="hint" data-i18n="hub.p2.hint"></p>
@@ -77,7 +78,7 @@
   </section>
 
   <section class="panel disabled" id="panel3">
-    <div class="panel-head"><div class="title"><span class="num">3</span><h2 data-i18n="hub.p3">Get your world</h2></div></div>
+    <div class="panel-head"><div class="title"><span class="num">03</span><h2 data-i18n="hub.p3">Get your world</h2></div></div>
     <ul class="summary" id="summary"></ul>
     <div class="warn-txt pad" id="largeWarn" data-i18n="warn.large" hidden></div>
     <div class="progress" id="progress" hidden><i></i></div>
@@ -96,35 +97,32 @@
     </div>
   </section>
 
-  <h2 class="section-title" data-i18n="hub.tools">Need just one part?</h2>
-  <div class="tools">
-    <a class="tool" href="server-to-singleplayer.html">
-      <span class="arrow">→</span>
-      <div class="t-k">playerdata → level.dat</div>
-      <h3>ServerToSingleplayer</h3>
-      <p data-i18n="hub.tool.sts"></p>
-    </a>
-    <a class="tool" href="BukkitToVanilla.html">
-      <span class="arrow">→</span>
-      <div class="t-k">world_nether + world_the_end → DIM-1 + DIM1</div>
-      <h3>BukkitToVanilla</h3>
-      <p data-i18n="hub.tool.btv"></p>
-    </a>
-  </div>
-
-  <h2 class="section-title" data-i18n="hub.why">Why does this happen?</h2>
+  <h2 class="section-title" data-i18n="hub.why">Why this happens</h2>
+  <figure class="tree" aria-label="How the folders get merged">
+    <pre>server/
+├─ world/
+│  ├─ level.dat
+│  └─ playerdata/
+├─ <span class="hl">world_nether/</span>
+└─ <span class="hl">world_the_end/</span></pre>
+    <span class="arrow" aria-hidden="true">→</span>
+    <pre>world/
+├─ level.dat   <span class="hl">+ your player</span>
+├─ playerdata/
+├─ <span class="hl">DIM-1/</span>       nether
+└─ <span class="hl">DIM1/</span>        end</pre>
+    <figcaption class="cap">What a Paper server gives you, and what singleplayer expects.</figcaption>
+  </figure>
   <div class="faq">
-    <details><summary data-i18n="faq.q1"></summary><div class="a" data-i18n-html="faq.a1"></div></details>
-    <details><summary data-i18n="faq.q2"></summary><div class="a" data-i18n-html="faq.a2"></div></details>
-    <details><summary data-i18n="faq.q3"></summary><div class="a" data-i18n-html="faq.a3"></div></details>
-    <details><summary data-i18n="faq.q4"></summary><div class="a" data-i18n-html="faq.a4"></div></details>
-    <details><summary data-i18n="faq.q5"></summary><div class="a" data-i18n-html="faq.a5"></div></details>
+    <div class="qa"><h3 data-i18n="faq.q1"></h3><p data-i18n-html="faq.a1"></p></div>
+    <div class="qa"><h3 data-i18n="faq.q2"></h3><p data-i18n-html="faq.a2"></p></div>
+    <div class="qa"><h3 data-i18n="faq.q3"></h3><p data-i18n-html="faq.a3"></p></div>
+    <div class="qa"><h3 data-i18n="faq.q4"></h3><p data-i18n-html="faq.a4"></p></div>
+    <div class="qa"><h3 data-i18n="faq.q5"></h3><p data-i18n-html="faq.a5"></p></div>
   </div>
 
-  <div class="privacy">
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2l6 2.5v5c0 4-2.6 7-6 8.5C6.6 16.5 4 13.5 4 9.5v-5L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.5 10l1.8 1.8L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <div data-i18n-html="privacy"></div>
-  </div>
+  <h2 class="section-title" data-i18n="hub.tools">Only need one half?</h2>
+  <p class="tools-line" data-i18n-html="hub.tools.line"></p>
 </main>
 
 <footer>

@@ -69,7 +69,7 @@
     world.size = size;
     detectEl.innerHTML =
       UI.chip('det.world', esc(world.name)) +
-      UI.chip('det.layout', UI.tv(world.split ? 'det.bukkit' : 'det.vanilla'), world.split ? 'warn' : '') +
+      UI.chip('det.layout', UI.tv(world.split ? 'det.bukkit' : 'det.vanilla'), '') +
       UI.dimChip('det.nether', world.dims.nether) +
       UI.dimChip('det.end', world.dims.end) +
       UI.chip('det.format', UI.tv(world.modern ? 'det.modern' : 'det.legacy')) +

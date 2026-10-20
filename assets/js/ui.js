@@ -24,7 +24,7 @@
   }
 
   function dimChip(labelKey, d){
-    const map = {inside:['det.inside','good'], merge:['det.merge','warn'], missing:['det.missing','bad']};
+    const map = {inside:['det.inside','good'], merge:['det.merge','acc'], missing:['det.missing','bad']};
     const [k, cls] = map[d.status];
     return chip(labelKey, tv(k), cls);
   }
