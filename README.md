@@ -4,12 +4,15 @@ Two small, single-file browser tools for moving Minecraft worlds between servers
 
 ## Tools
 
-### ServerToSingleplayer
+### All-in-one (index.html)
+Drop a server or world folder and get a ready-to-play singleplayer world: detects Paper/Spigot split dimensions, merges them back, and writes the chosen player into `level.dat`. Supports both the pre-26.1 layout (`playerdata/`, `Data.Player`) and 26.1+ (`players/data/`, `Data.singleplayer_uuid`, `dimensions/`).
+
+### ServerToSingleplayer (server-to-singleplayer.html)
 Repairs a world's `level.dat` after downloading it from a server. On a server, each player's position and inventory lives in `playerdata/`, keyed by UUID. Singleplayer doesn't read that — it only looks at the single `Player` tag baked into `level.dat`, which still has whatever it had before the world went on a server. This tool finds every player in `playerdata/` and builds a correct, ready-to-use `level.dat` for each one.
 
 **Use this when:** you played on a server and want to load that world in singleplayer with your position and inventory intact.
 
-### BukkitToVanilla
+### BukkitToVanilla (BukkitToVanilla.html)
 Merges a Bukkit-based world (Paper, Spigot, Purpur, ...) back into the single-folder layout Vanilla and Fabric expect. Bukkit-based servers store each dimension in its own top-level folder (`world/`, `world_nether/`, `world_the_end/`); Vanilla and Fabric only look for the Nether and End nested inside the main world folder as `DIM-1` and `DIM1`. This tool copies things into the right place and zips up one standard world folder.
 
 **Use this when:** you're moving a Bukkit-based world to a Vanilla/Fabric server, or want your Nether and End to actually show up in singleplayer instead of regenerating empty.

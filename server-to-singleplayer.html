@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ServerToSingleplayer</title>
+<meta name="description" content="Rebuild level.dat so a Minecraft server world loads your inventory and position in singleplayer. Free, runs in your browser.">
+<link rel="canonical" href="https://mcservertosingle.online/server-to-singleplayer.html">
+<meta name="theme-color" content="#0b0c0e">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="mcservertosingle">
+<meta property="og:url" content="https://mcservertosingle.online/server-to-singleplayer.html">
+<meta property="og:title" content="You got your world back, but not your playerdata.">
+<meta property="og:description" content="Rebuild level.dat so a Minecraft server world loads your inventory and position in singleplayer. Runs in your browser.">
+<meta property="og:image" content="https://mcservertosingle.online/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="sts">
+<header class="topbar">
+  <a class="brand" href="./"><img src="assets/img/favicon-32.png" alt="" width="22" height="22">mcservertosingle<span>.online</span></a>
+  <nav class="nav">
+    <a href="./" class="nl" data-i18n="nav.fix">Fix a world</a>
+    <a href="server-to-singleplayer.html" aria-current="page" class="nl">STS</a>
+    <a href="BukkitToVanilla.html" class="nl">BTV</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div class="kicker reveal"><span data-i18n="sts.kicker">ServerToSingleplayer · world converter</span><span class="tag" data-i18n="hub.tag">runs 100% in your browser</span></div>
+  <h1 class="reveal reveal-2" data-i18n-html="sts.h1">You got your world back,<br>but not <span class="accent">your playerdata.</span></h1>
+  <p class="lede reveal reveal-3" data-i18n-html="sts.lede"></p>
+
+  <section class="panel reveal reveal-3" id="panel1">
+    <div class="panel-head"><div class="title"><span class="num">1</span><h2 data-i18n="sts.p1">World folder</h2></div></div>
+    <p class="hint" data-i18n-html="sts.p1.hint"></p>
+    <label class="dropzone" id="dropzone">
+      <svg class="icon" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M4 10a2 2 0 012-2h8l3 3h13a2 2 0 012 2v15a2 2 0 01-2 2H6a2 2 0 01-2-2V10z" stroke="currentColor" stroke-width="1.6"/><path d="M18 15v8m0-8l-3 3m3-3l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="main-txt" data-i18n="drop.main.world">Click to choose your world folder</div>
+      <div class="sub-txt" data-i18n="drop.sub">or drag it here</div>
+      <input type="file" id="folderInput" webkitdirectory directory multiple>
+    </label>
+    <div class="status-line" id="scanStatus" role="status" aria-live="polite"></div>
+    <div class="picker" id="picker"></div>
+    <p class="hint" data-i18n-html="sts.p1.bukkit"></p>
+  </section>
+
+  <section class="panel disabled" id="panel2">
+    <div class="panel-head">
+      <div class="title"><span class="num">2</span><h2 data-i18n="sts.p2">Repaired level.dat</h2></div>
+      <label class="search-box"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M14 14l-3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><input type="text" id="search" data-i18n-attr="placeholder:search;aria-label:search"></label>
+    </div>
+    <div class="toolbar" style="padding-top:14px"><div class="count-txt" id="count"></div></div>
+    <div class="grid" id="grid"></div>
+    <div class="status-line" id="dlStatus" role="status" aria-live="polite"></div>
+    <div class="row-end"><button class="btn ghost" id="dlAll" type="button" disabled data-i18n="dl.all">All as ZIP</button></div>
+    <div class="after-note">
+      <p data-i18n-html="sts.after"></p>
+      <ol>
+        <li data-i18n-html="sts.after.1"></li>
+        <li data-i18n-html="sts.after.2"></li>
+        <li data-i18n-html="sts.after.3"></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>mcservertosingle · <span data-i18n="footer.by">made by xDeush</span></span>
+  <span><a href="https://github.com/xDeush/mcservertosingle">github</a> · <span data-i18n="footer.local">nothing leaves your browser</span></span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/nbt.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/sts.js"></script>
+</body>
+</html>
