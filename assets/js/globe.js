@@ -18,9 +18,9 @@
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const mobile = W < 720;
-    R = mobile ? W * 0.7 : Math.min(W * 0.3, H * 0.55, 460);
-    cx = mobile ? W * 0.7 : W - R * 0.8;
-    cy = mobile ? R * 0.55 : H * 0.42;
+    R = mobile ? W * 0.48 : Math.min(W * 0.42, H * 0.8);
+    cx = W / 2;
+    cy = H;
   }
 
   // Unit-sphere point from lat/lon (radians).
